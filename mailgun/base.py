@@ -1,7 +1,7 @@
 """Base classes and functions."""
 
 
-class ApiResource(object):
+class ApiResource(object):  # pylint: disable=too-few-public-methods
     """
     Base class for API resource.
     """

@@ -2,7 +2,7 @@
 from .api import MailgunApi
 
 
-api = MailgunApi()
+api = MailgunApi()  # pylint: disable=invalid-name
 
 
 def initialize(api_key):

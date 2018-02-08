@@ -55,7 +55,8 @@ class MailingList(ApiResource):
             'vars': json.dumps(parameters),
         })
 
-    def update_list_member(self, address, member_address, parameters=None, name=None, subscribed=None):
+    def update_list_member(  # pylint: disable=too-many-arguments
+            self, address, member_address, parameters=None, name=None, subscribed=None):
         """
         Update a member of a mailing list.
 

@@ -4,8 +4,9 @@ import requests
 from .mailing_list import MailingList
 
 
-class MailgunApi(object):
+class MailgunApi(object):  # pylint: disable=too-few-public-methods
     """
+    Mailgun API client.
     """
     def __init__(self, api_key=None):
         self.api_key = api_key
