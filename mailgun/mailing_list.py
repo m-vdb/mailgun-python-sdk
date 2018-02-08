@@ -73,6 +73,20 @@ class MailingList(ApiResource):
             'vars': json.dumps(parameters),
         })
 
+    def update_multiple_list_members(self, address, members, upsert=False):
+        """
+        Update multiple members of a mailing list.
+
+        :param address:            address of mailing list
+        :param members:            members parameters to update
+        :param upsert:             update existing members if True, else discards
+        """
+        endpoint = '{}/members.json'.format(address)
+        return self.request('POST', endpoint, data={
+            'members': json.dumps(members),
+            'upsert': 'yes' if upsert else 'no',
+        })
+
     def remove_list_member(self, address, member_address):
         """
         Remove a member from a mailing list.
