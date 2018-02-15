@@ -1,6 +1,7 @@
 # mailgun-python-sdk
 
 [![Build Status](https://travis-ci.org/m-vdb/mailgun-python-sdk.svg?branch=master)](https://travis-ci.org/m-vdb/mailgun-python-sdk)
+[![Coverage Status](https://coveralls.io/repos/github/m-vdb/mailgun-python-sdk/badge.svg?branch=master)](https://coveralls.io/github/m-vdb/mailgun-python-sdk?branch=master)
 
 Python SDK for Mailgun
 
