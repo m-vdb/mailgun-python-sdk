@@ -2,9 +2,13 @@
 
 from setuptools import setup, find_packages
 
+
+VERSION = '0.1'
+
+
 setup(
     name='mailgun-python-sdk',
-    version='0.1',
+    version=VERSION,
     description='Mailgun Python SDK (unofficial)',
     author='Maxime Vdb',
     author_email='me@maxvdb.com',
@@ -12,6 +16,8 @@ setup(
     install_requires=['requests'],
     license="MIT",
     keywords="mailgun api sdk",
+    url='https://github.com/m-vdb/mailgun-python-sdk',
+    download_url='https://github.com/m-vdb/mailgun-python-sdk/archive/v{}.tar.gz'.format(VERSION),
     project_urls={
         "Source Code": "https://github.com/m-vdb/mailgun-python-sdk",
     }
