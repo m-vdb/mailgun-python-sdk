@@ -10,6 +10,6 @@ Python SDK for Mailgun
 
 - [x] Publish on Pypi
 - [x] Add tests
-- [ ] Setup coverage
+- [x] Setup coverage
 - [ ] Add other APIs
 - [ ] Generate doc
