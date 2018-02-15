@@ -7,7 +7,8 @@ Python SDK for Mailgun
 
 ## Roadmap
 
-- [ ] Add tests
 - [x] Publish on Pypi
+- [x] Add tests
+- [ ] Setup coverage
 - [ ] Add other APIs
 - [ ] Generate doc
