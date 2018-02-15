@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='Mailgun SDK',
+    name='mailgun-python-sdk',
     version='0.1',
     description='Mailgun Python SDK (unofficial)',
     author='Maxime Vdb',
