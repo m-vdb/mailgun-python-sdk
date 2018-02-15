@@ -7,6 +7,7 @@ setup(
     version='0.1',
     description='Mailgun Python SDK (unofficial)',
     author='Maxime Vdb',
+    author_email='me@maxvdb.com',
     packages=find_packages(),
     install_requires=['requests'],
     license="MIT",
