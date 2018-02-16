@@ -1,4 +1,10 @@
 """Base classes and functions."""
+import functools
+import re
+import sys
+
+from requests.exceptions import HTTPError
+import six
 
 
 class ApiResource(object):  # pylint: disable=too-few-public-methods
@@ -30,3 +36,42 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         response.raise_for_status()
 
         return response.json()
+
+
+def silence_error(status_code, msg_pattern):
+    """
+    A decorator to silence errors during an API call. For instance
+    removing an address from a mailing list shouldn't yield to an error
+    in case the address is not present in the mailing list.
+
+    :param status_code:          the status code to catch
+    :param msg_pattern:          a pattern to match the body message
+    """
+
+    def decorator(func):
+        """
+        Actual decorator.
+        """
+
+        @functools.wraps(func)
+        def inner(*args, **kwargs):
+            """
+            Inner wrapper for the function.
+            """
+            try:
+                return func(*args, **kwargs)
+            except HTTPError as exc:
+                exc_info = sys.exc_info()
+                if exc.response.status_code == status_code:
+                    try:
+                        response = exc.response.json()
+                    except ValueError:
+                        pass
+                    else:
+                        if re.search(msg_pattern, response.get('message', '')):
+                            return response
+                six.reraise(*exc_info)
+
+        return inner
+
+    return decorator
