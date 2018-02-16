@@ -1,7 +1,7 @@
 """Mailing list API."""
 import json
 
-from .base import ApiResource
+from .base import ApiResource, silence_error
 
 
 class MailingList(ApiResource):
@@ -38,6 +38,7 @@ class MailingList(ApiResource):
         """
         return self.request('DELETE', address)
 
+    @silence_error(400, 'Address already exists')
     def add_list_member(self, address, member_address, parameters=None, name=None):
         """
         Add a member to a mailing list.
@@ -87,6 +88,7 @@ class MailingList(ApiResource):
             'upsert': 'yes' if upsert else 'no',
         })
 
+    @silence_error(404, r'Member .+ not found')
     def remove_list_member(self, address, member_address):
         """
         Remove a member from a mailing list.
