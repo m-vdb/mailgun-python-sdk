@@ -13,7 +13,7 @@ setup(
     author='Maxime Vdb',
     author_email='me@maxvdb.com',
     packages=find_packages(),
-    install_requires=['requests'],
+    install_requires=['requests', 'six'],
     license="MIT",
     keywords="mailgun api sdk",
     url='https://github.com/m-vdb/mailgun-python-sdk',
