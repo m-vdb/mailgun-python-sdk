@@ -13,3 +13,11 @@ Python SDK for Mailgun
 - [x] Setup coverage
 - [ ] Add other APIs
 - [ ] Generate doc
+
+## How to
+
+Publish on pypi:
+
+```bash
+$ python setup.py sdist upload
+```
