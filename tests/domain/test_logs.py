@@ -20,9 +20,9 @@ class LogsTestCase(unittest.TestCase):
 
         request.assert_called_with(
             'GET',
-            data={
+            params={
                 'limit': 300,
-                'offset': 0,
+                'skip': 0,
             }
         )
         self.assertEqual(response, request.return_value)
@@ -33,9 +33,9 @@ class LogsTestCase(unittest.TestCase):
 
         request.assert_called_with(
             'GET',
-            data={
+            params={
                 'limit': 42,
-                'offset': 84,
+                'skip': 84,
             }
         )
         self.assertEqual(response, request.return_value)

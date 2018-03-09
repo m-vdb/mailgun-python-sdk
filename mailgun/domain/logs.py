@@ -12,4 +12,4 @@ class Logs(ApiDomainResource):
         """
         List the logs.
         """
-        return self.request('GET', data={'limit': limit, 'offset': offset})
+        return self.request('GET', params={'limit': limit, 'skip': offset})
