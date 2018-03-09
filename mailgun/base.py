@@ -16,8 +16,14 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
 
     def __init__(self, api):
         assert self.api_endpoint, 'Missing `api_endpoint` attribute definition.'
-        self.base_url = '{}/{}'.format(self.api_url, self.api_endpoint)
         self.api = api
+        self.base_url = self._get_base_url()
+
+    def _get_base_url(self):
+        """
+        Return the base URL for the resource.
+        """
+        return '{}/{}'.format(self.api_url, self.api_endpoint)
 
     def request(self, method, endpoint='', **params):
         """
@@ -36,6 +42,21 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         response.raise_for_status()
 
         return response.json()
+
+
+class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
+    """
+    Base class for API resources that are domain-based.
+    """
+    def __init__(self, api, domain):
+        self.domain = domain
+        super(ApiDomainResource, self).__init__(api)
+
+    def _get_base_url(self):
+        """
+        Return the base URL for the resource.
+        """
+        return '{}/{}/{}'.format(self.api_url, self.domain.name, self.api_endpoint)
 
 
 def silence_error(status_code, msg_pattern):

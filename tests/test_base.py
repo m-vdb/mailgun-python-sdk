@@ -6,10 +6,14 @@ from requests import Response
 from requests.exceptions import HTTPError
 
 from mailgun.api import MailgunApi
-from mailgun.base import ApiResource, silence_error
+from mailgun.base import ApiResource, ApiDomainResource, silence_error
 
 
 class FakeResource(ApiResource):
+    api_endpoint = 'fake'
+
+
+class FakeDomainResource(ApiDomainResource):
     api_endpoint = 'fake'
 
 
@@ -56,6 +60,23 @@ class ApiResourceTestCase(unittest.TestCase):
         request.return_value.raise_for_status.assert_called_with()
         request.return_value.json.assert_called_with()
         self.assertEqual(response, request.return_value.json.return_value)
+
+
+class ApiDomainResourceTestCase(unittest.TestCase):
+
+    def test_init_no_endpoint(self):
+        with self.assertRaisesRegexp(AssertionError, 'Missing'):
+            ApiDomainResource(api, api.domain('mydomain.com'))
+
+    def test_init_ok(self):
+        domain = api.domain('mydomain.com')
+        resource = FakeDomainResource(api, domain)
+        self.assertEqual(resource.api, api)
+        self.assertEqual(resource.domain, domain)
+        self.assertEqual(resource.base_url, 'https://api.mailgun.net/v3/mydomain.com/fake')
+
+
+class BaseTestCase(unittest.TestCase):
 
     def test_silence_error_no_error(self):
         @silence_error(400, 'stuff')
