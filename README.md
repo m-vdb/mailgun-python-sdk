@@ -7,6 +7,11 @@
 Python SDK for Mailgun
 
 
+## Supported APIs
+
+- [MailingList API](https://documentation.mailgun.com/en/latest/api-mailinglists.html)
+- [Logs API](https://documentation.mailgun.com/en/latest/api-logs.html)
+
 ## Roadmap
 
 - [x] Publish on Pypi
