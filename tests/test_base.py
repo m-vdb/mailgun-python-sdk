@@ -17,6 +17,11 @@ class FakeDomainResource(ApiDomainResource):
     api_endpoint = 'fake'
 
 
+class FakeDomainNamespaceResource(ApiDomainResource):
+    api_endpoint = 'fake'
+    DOMAIN_NAMESPACE = True
+
+
 api = MailgunApi()
 
 
@@ -74,6 +79,13 @@ class ApiDomainResourceTestCase(unittest.TestCase):
         self.assertEqual(resource.api, api)
         self.assertEqual(resource.domain, domain)
         self.assertEqual(resource.base_url, 'https://api.mailgun.net/v3/mydomain.com/fake')
+
+    def test_init_domain_namespace(self):
+        domain = api.domain('mydomain.com')
+        resource = FakeDomainNamespaceResource(api, domain)
+        self.assertEqual(resource.api, api)
+        self.assertEqual(resource.domain, domain)
+        self.assertEqual(resource.base_url, 'https://api.mailgun.net/v3/domains/mydomain.com/fake')
 
 
 class BaseTestCase(unittest.TestCase):

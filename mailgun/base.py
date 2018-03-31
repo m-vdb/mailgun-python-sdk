@@ -48,6 +48,8 @@ class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
     """
     Base class for API resources that are domain-based.
     """
+    DOMAIN_NAMESPACE = False
+
     def __init__(self, api, domain):
         self.domain = domain
         super(ApiDomainResource, self).__init__(api)
@@ -56,7 +58,8 @@ class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
         """
         Return the base URL for the resource.
         """
-        return '{}/{}/{}'.format(self.api_url, self.domain.name, self.api_endpoint)
+        template = '{}/domains/{}/{}' if self.DOMAIN_NAMESPACE else '{}/{}/{}'
+        return template.format(self.api_url, self.domain.name, self.api_endpoint)
 
 
 def silence_error(status_code, msg_pattern):
