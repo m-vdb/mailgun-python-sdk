@@ -5,6 +5,7 @@ from mock import patch
 from mailgun.api import MailgunApi
 from mailgun.domain.logs import Logs
 
+
 api = MailgunApi()
 
 
