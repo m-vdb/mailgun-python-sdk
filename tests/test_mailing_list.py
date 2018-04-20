@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from mock import patch
+from mock import patch, call
 
 from mailgun.api import MailgunApi
 from mailgun.mailing_list import MailingList
@@ -86,7 +86,7 @@ class MailingListTestCase(unittest.TestCase):
 
     @patch.object(MailingList, 'request')
     def test_update_multiple_list_members(self, request):
-        response = self.mailing_list.update_multiple_list_members(
+        responses = self.mailing_list.update_multiple_list_members(
             'ml@domain.com', ['member1@gmail.com', {'address': 'member2@gmail.com', "subscribed": False}]
         )
 
@@ -101,11 +101,11 @@ class MailingListTestCase(unittest.TestCase):
                 'upsert': 'no'
             }
         )
-        self.assertEqual(response, request.return_value)
+        self.assertEqual(responses, [request.return_value])
 
     @patch.object(MailingList, 'request')
     def test_update_multiple_list_members_upsert(self, request):
-        response = self.mailing_list.update_multiple_list_members(
+        responses = self.mailing_list.update_multiple_list_members(
             'ml@domain.com', ['member1@gmail.com'], True
         )
 
@@ -117,7 +117,34 @@ class MailingListTestCase(unittest.TestCase):
                 'upsert': 'yes'
             }
         )
-        self.assertEqual(response, request.return_value)
+        self.assertEqual(responses, [request.return_value])
+
+    @patch.object(MailingList, 'request')
+    def test_update_multiple_list_members_several_batches(self, request):
+        responses = self.mailing_list.update_multiple_list_members(
+            'ml@domain.com',
+            ['member@gmail.com'] * (self.mailing_list.MEMBERS_UPLOAD_LIMIT + 1), True
+        )
+
+        request.assert_has_calls([
+            call(
+                'POST',
+                'ml@domain.com/members.json',
+                data={
+                    'members': json.dumps(["member@gmail.com"] * self.mailing_list.MEMBERS_UPLOAD_LIMIT),
+                    'upsert': 'yes'
+                }
+            ),
+            call(
+                'POST',
+                'ml@domain.com/members.json',
+                data={
+                    'members': json.dumps(["member@gmail.com"]),
+                    'upsert': 'yes'
+                }
+            )
+        ])
+        self.assertEqual(responses, [request.return_value, request.return_value])
 
     @patch.object(MailingList, 'request')
     def test_remove_list_member(self, request):

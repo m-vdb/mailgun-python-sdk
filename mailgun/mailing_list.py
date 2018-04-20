@@ -1,5 +1,7 @@
 """Mailing list API."""
+from __future__ import division
 import json
+import math
 
 from .base import ApiResource, silence_error
 
@@ -9,6 +11,7 @@ class MailingList(ApiResource):
     Mailing list resource.
     """
     api_endpoint = 'lists'
+    MEMBERS_UPLOAD_LIMIT = 1000
 
     def create(self, address, name=None, description=None, access_level=None):
         """
@@ -83,10 +86,18 @@ class MailingList(ApiResource):
         :param upsert:             update existing members if True, else discards
         """
         endpoint = '{}/members.json'.format(address)
-        return self.request('POST', endpoint, data={
-            'members': json.dumps(members),
-            'upsert': 'yes' if upsert else 'no',
-        })
+        responses = []
+        nb_batch = int(math.ceil(len(members) / self.MEMBERS_UPLOAD_LIMIT))
+        for idx in range(nb_batch):
+            start = idx * self.MEMBERS_UPLOAD_LIMIT
+            end = (idx + 1) * self.MEMBERS_UPLOAD_LIMIT
+            members_batch = members[start:end]
+            if members_batch:
+                responses.append(self.request('POST', endpoint, data={
+                    'members': json.dumps(members_batch),
+                    'upsert': 'yes' if upsert else 'no',
+                }))
+        return responses
 
     @silence_error(404, r'Member .+ not found')
     def remove_list_member(self, address, member_address):
