@@ -12,6 +12,7 @@ class MailgunApi(object):  # pylint: disable=too-few-public-methods
     """
     Mailgun API client.
     """
+
     def __init__(self, api_key=None):
         self.api_key = api_key
         self.session = requests.Session()
@@ -28,4 +29,4 @@ class MailgunApi(object):  # pylint: disable=too-few-public-methods
         :param api_key:         your Mailgun API key
         """
         self.api_key = api_key
-        self.session.auth = ('api', api_key)
+        self.session.auth = ("api", api_key)

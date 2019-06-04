@@ -11,11 +11,12 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
     """
     Base class for API resource.
     """
+
     api_endpoint = None
-    api_url = 'https://api.mailgun.net/v3'
+    api_url = "https://api.mailgun.net/v3"
 
     def __init__(self, api):
-        assert self.api_endpoint, 'Missing `api_endpoint` attribute definition.'
+        assert self.api_endpoint, "Missing `api_endpoint` attribute definition."
         self.api = api
         self.base_url = self._get_base_url()
 
@@ -23,9 +24,9 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         """
         Return the base URL for the resource.
         """
-        return '{}/{}'.format(self.api_url, self.api_endpoint)
+        return "{}/{}".format(self.api_url, self.api_endpoint)
 
-    def request(self, method, endpoint='', **params):
+    def request(self, method, endpoint="", **params):
         """
         Perform a request using the api session.
 
@@ -36,7 +37,7 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         """
         url = self.base_url
         if endpoint:
-            url = '{}/{}'.format(url, endpoint)
+            url = "{}/{}".format(url, endpoint)
 
         response = self.api.session.request(method, url, **params)
         response.raise_for_status()
@@ -48,6 +49,7 @@ class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
     """
     Base class for API resources that are domain-based.
     """
+
     DOMAIN_NAMESPACE = False
 
     def __init__(self, api, domain):
@@ -58,7 +60,7 @@ class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
         """
         Return the base URL for the resource.
         """
-        template = '{}/domains/{}/{}' if self.DOMAIN_NAMESPACE else '{}/{}/{}'
+        template = "{}/domains/{}/{}" if self.DOMAIN_NAMESPACE else "{}/{}/{}"
         return template.format(self.api_url, self.domain.name, self.api_endpoint)
 
 
@@ -92,7 +94,7 @@ def silence_error(status_code, msg_pattern):
                     except ValueError:
                         pass
                     else:
-                        if re.search(msg_pattern, response.get('message', '')):
+                        if re.search(msg_pattern, response.get("message", "")):
                             return response
                 six.reraise(*exc_info)
 

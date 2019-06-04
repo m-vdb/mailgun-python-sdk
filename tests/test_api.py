@@ -9,7 +9,6 @@ from mailgun.mailing_list import MailingList
 
 
 class MailgunApiTestCase(unittest.TestCase):
-
     def test_init(self):
         api = MailgunApi()
         self.assertIsNone(api.api_key)
@@ -20,13 +19,13 @@ class MailgunApiTestCase(unittest.TestCase):
     def test_init_domain(self):
         api = MailgunApi()
         self.assertIsInstance(api.domain, functools.partial)
-        domain = api.domain('mydomain.com')
+        domain = api.domain("mydomain.com")
         self.assertIsInstance(domain, Domain)
         self.assertIs(domain.api, api)
-        self.assertEqual(domain.name, 'mydomain.com')
+        self.assertEqual(domain.name, "mydomain.com")
 
     def test_set_api_key(self):
         api = MailgunApi()
-        api.set_api_key('api-key-xxx')
-        self.assertEqual(api.api_key, 'api-key-xxx')
-        self.assertEqual(api.session.auth, ('api', 'api-key-xxx'))
+        api.set_api_key("api-key-xxx")
+        self.assertEqual(api.api_key, "api-key-xxx")
+        self.assertEqual(api.session.auth, ("api", "api-key-xxx"))

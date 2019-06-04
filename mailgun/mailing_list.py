@@ -10,7 +10,8 @@ class MailingList(ApiResource):
     """
     Mailing list resource.
     """
-    api_endpoint = 'lists'
+
+    api_endpoint = "lists"
     MEMBERS_UPLOAD_LIMIT = 1000
 
     def create(self, address, name=None, description=None, access_level=None):
@@ -22,26 +23,29 @@ class MailingList(ApiResource):
         :param description:        optional description
         :param access_level:       optional access level: readonly (default), members, everyone
         """
-        return self.request('POST', data={
-            'address': address,
-            'name': name,
-            'description': description,
-            'access_level': access_level,
-        })
+        return self.request(
+            "POST",
+            data={
+                "address": address,
+                "name": name,
+                "description": description,
+                "access_level": access_level,
+            },
+        )
 
     def list(self):
         """
         List the existing mailing lists.
         """
-        return self.request('GET')
+        return self.request("GET")
 
     def delete(self, address):
         """
         Delete an existing mailing list.
         """
-        return self.request('DELETE', address)
+        return self.request("DELETE", address)
 
-    @silence_error(400, 'Address already exists')
+    @silence_error(400, "Address already exists")
     def add_list_member(self, address, member_address, parameters=None, name=None):
         """
         Add a member to a mailing list.
@@ -51,16 +55,21 @@ class MailingList(ApiResource):
         :param parameters:         optional parameters, will be saved in the member `vars`
         :param name:               optional member name
         """
-        endpoint = '{}/members'.format(address)
-        return self.request('POST', endpoint, data={
-            'subscribed': True,
-            'address': member_address,
-            'name': name,
-            'vars': json.dumps(parameters),
-        })
+        endpoint = "{}/members".format(address)
+        return self.request(
+            "POST",
+            endpoint,
+            data={
+                "subscribed": True,
+                "address": member_address,
+                "name": name,
+                "vars": json.dumps(parameters),
+            },
+        )
 
     def update_list_member(  # pylint: disable=too-many-arguments
-            self, address, member_address, parameters=None, name=None, subscribed=None):
+        self, address, member_address, parameters=None, name=None, subscribed=None
+    ):
         """
         Update a member of a mailing list.
 
@@ -70,12 +79,16 @@ class MailingList(ApiResource):
         :param name:               optional member name
         :param subscribed:         optional, set to True to subscribe, False to unsubscribe
         """
-        endpoint = '{}/members/{}'.format(address, member_address)
-        return self.request('PUT', endpoint, data={
-            'subscribed': subscribed,
-            'name': name,
-            'vars': json.dumps(parameters),
-        })
+        endpoint = "{}/members/{}".format(address, member_address)
+        return self.request(
+            "PUT",
+            endpoint,
+            data={
+                "subscribed": subscribed,
+                "name": name,
+                "vars": json.dumps(parameters),
+            },
+        )
 
     def update_multiple_list_members(self, address, members, upsert=False):
         """
@@ -85,7 +98,7 @@ class MailingList(ApiResource):
         :param members:            members parameters to update
         :param upsert:             update existing members if True, else discards
         """
-        endpoint = '{}/members.json'.format(address)
+        endpoint = "{}/members.json".format(address)
         responses = []
         nb_batch = int(math.ceil(len(members) / self.MEMBERS_UPLOAD_LIMIT))
         for idx in range(nb_batch):
@@ -93,13 +106,19 @@ class MailingList(ApiResource):
             end = (idx + 1) * self.MEMBERS_UPLOAD_LIMIT
             members_batch = members[start:end]
             if members_batch:
-                responses.append(self.request('POST', endpoint, data={
-                    'members': json.dumps(members_batch),
-                    'upsert': 'yes' if upsert else 'no',
-                }))
+                responses.append(
+                    self.request(
+                        "POST",
+                        endpoint,
+                        data={
+                            "members": json.dumps(members_batch),
+                            "upsert": "yes" if upsert else "no",
+                        },
+                    )
+                )
         return responses
 
-    @silence_error(404, r'Member .+ not found')
+    @silence_error(404, r"Member .+ not found")
     def remove_list_member(self, address, member_address):
         """
         Remove a member from a mailing list.
@@ -107,5 +126,5 @@ class MailingList(ApiResource):
         :param address:            address of mailing list
         :param member_address:     member email address
         """
-        endpoint = '{}/members/{}'.format(address, member_address)
-        return self.request('DELETE', endpoint)
+        endpoint = "{}/members/{}".format(address, member_address)
+        return self.request("DELETE", endpoint)

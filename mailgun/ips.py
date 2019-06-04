@@ -6,7 +6,8 @@ class IPs(ApiResource):
     """
     IPs resource.
     """
-    api_endpoint = 'ips'
+
+    api_endpoint = "ips"
 
     def list(self, dedicated=False):
         """
@@ -14,8 +15,8 @@ class IPs(ApiResource):
         """
         params = {}
         if dedicated:
-            params['dedicated'] = 'true'
-        return self.request('GET', params=params)
+            params["dedicated"] = "true"
+        return self.request("GET", params=params)
 
     def detail(self, ip):  # pylint: disable=invalid-name
         """
@@ -23,4 +24,4 @@ class IPs(ApiResource):
 
         :param ip:           the ip address
         """
-        return self.request('GET', ip)
+        return self.request("GET", ip)
