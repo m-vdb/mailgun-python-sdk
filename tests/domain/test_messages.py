@@ -1,5 +1,6 @@
 import json
 import unittest
+import os
 
 from mock import patch, call
 
@@ -11,7 +12,7 @@ class MailingListTestCase(unittest.TestCase):
     def setUp(self):
         super(MailingListTestCase, self).setUp()
         api = MailgunApi(api_key="blah")
-        self.messages = Messages(api, api.domain("blah.net"))
+        self.messages = Messages(api, api.domain('blah.net'), os.getenv('MAILGUN_BASE_URL'))
 
     @patch.object(Messages, "request")
     def test_send_via_template(self, request):
