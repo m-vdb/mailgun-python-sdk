@@ -15,7 +15,7 @@ class Messages(ApiDomainResource):
     """
 
     api_endpoint = "messages"
-
+    require_tls = False
     """
     data example
     data={
@@ -29,14 +29,19 @@ class Messages(ApiDomainResource):
             },
     """
 
-    def send_via_template(self, from_name: str, from_email: str, to: str, subject: str, template: str, vars: dict):
+    def send_via_template(self, from_name: str, from_email: str, to: str, subject: str, template: str, variables: dict):
+        payload = {
+            "from": "{} <{}>".format(from_name, from_email),
+            "to": [to],
+            "subject": subject,
+            "template": template,
+            "h:X-Mailgun-Variables": json.dumps(variables)
+        }
+
+        if self.require_tls:
+            payload['o:require-tls'] = 'True'
+
         return self.request(
             "POST",
-            data={
-                "from": "{} <{}>".format(from_name, from_email),
-                "to": [to],
-                "subject": subject,
-                "template": template,
-                "h:X-Mailgun-Variables": json.dumps(vars)
-            },
+            data=payload,
         )
