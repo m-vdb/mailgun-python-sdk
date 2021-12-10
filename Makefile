@@ -1,11 +1,15 @@
-.PHONY: venv install test-install
+.PHONY: install test-install
 
-venv:
-	@python --version || (echo "Python is not installed, Python 3.6+"; exit 1);
-	virtualenv --python=python venv
 
-install: venv
+install:
 	. venv/bin/activate; pip install .
 
 test-install: install
-	. venv/bin/activate; pip install -r tests/requirements.txt
+	poetry install
+
+analysis:
+	poetry run flake8 --ignore=E123,E126,E128,E501,W391,W291,W293,F401 tests
+	poetry run flake8 --ignore=E402,F401,W391,W291,W293 mailgun --max-line-length=300
+
+test: analysis
+	poetry run pytest
