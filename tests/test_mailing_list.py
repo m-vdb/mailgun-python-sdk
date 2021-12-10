@@ -125,8 +125,7 @@ class MailingListTestCase(unittest.TestCase):
                     "ml@domain.com/members.json",
                     data={
                         "members": json.dumps(
-                            ["member@gmail.com"]
-                            * self.mailing_list.MEMBERS_UPLOAD_LIMIT
+                            ["member@gmail.com"] * self.mailing_list.MEMBERS_UPLOAD_LIMIT
                         ),
                         "upsert": "yes",
                     },
