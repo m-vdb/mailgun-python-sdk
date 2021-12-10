@@ -8,7 +8,7 @@ from mailgun.api import MailgunApi
 from mailgun.domain.messages import Messages
 
 
-class MailingListTestCase(unittest.TestCase):
+class MessagesTestCase(unittest.TestCase):
     def setUp(self):
         super(MailingListTestCase, self).setUp()
         api = MailgunApi(api_key="blah")
