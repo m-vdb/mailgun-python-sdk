@@ -1,8 +1,8 @@
 import unittest
 
-from mailgunsdk.api import MailgunApi
-from mailgunsdk.domain import Domain
-from mailgunsdk.domain.logs import Logs
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.domain import Domain
+from mailgun_sdk.domain.logs import Logs
 
 api = MailgunApi()
 

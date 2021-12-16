@@ -4,8 +4,8 @@ import os
 
 from mock import patch, call
 
-from mailgunsdk.api import MailgunApi
-from mailgunsdk.domain.messages import Messages
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.domain.messages import Messages
 
 
 class MessagesTestCase(unittest.TestCase):

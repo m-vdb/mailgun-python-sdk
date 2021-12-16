@@ -3,8 +3,8 @@ import unittest
 
 from mock import patch, call
 
-from mailgunsdk.api import MailgunApi
-from mailgunsdk.mailing_list import MailingList
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.mailing_list import MailingList
 
 
 class MailingListTestCase(unittest.TestCase):

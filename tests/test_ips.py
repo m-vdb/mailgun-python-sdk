@@ -3,8 +3,8 @@ import unittest
 
 from mock import patch
 
-from mailgunsdk.api import MailgunApi
-from mailgunsdk.ips import IPs
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.ips import IPs
 
 
 class IPsTestCase(unittest.TestCase):

@@ -4,7 +4,7 @@ url: https://documentation.mailgun.com/en/latest/user_manual.html#sending-via-ap
 """
 import json
 
-from mailgunsdk.base import ApiDomainResource
+from mailgun_sdk.base import ApiDomainResource
 
 
 class Messages(ApiDomainResource):
