@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "mailgun-python-sdk"
+name = "mailgun-sdk"
 version = "0.2.0"
 description = "Mailgun SDK"
 authors = ["Maxime Vdb <me@maxvdb.com>", "Omar Shaban <omars@php.net>"]
