@@ -2,8 +2,8 @@ import unittest
 
 from mock import patch
 
-from mailgun.api import MailgunApi
-from mailgun.domain.ips import IPs
+from mailgunsdk.api import MailgunApi
+from mailgunsdk.domain.ips import IPs
 
 
 api = MailgunApi()

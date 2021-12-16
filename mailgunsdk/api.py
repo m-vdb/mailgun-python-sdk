@@ -24,7 +24,7 @@ class MailgunApi(object):  # pylint: disable=too-few-public-methods
 
     def set_api_key(self, api_key):
         """
-        Set the API key on the client. This is called by `mailgun.initialize()`.
+        Set the API key on the client. This is called by `mailgunsdk.initialize()`.
 
         :param api_key:         your Mailgun API key
         """

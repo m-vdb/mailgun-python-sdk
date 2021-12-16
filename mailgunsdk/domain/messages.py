@@ -2,11 +2,9 @@
 Messages API.
 url: https://documentation.mailgun.com/en/latest/user_manual.html#sending-via-api
 """
-from __future__ import division
 import json
-import math
 
-from mailgun.base import ApiDomainResource
+from mailgunsdk.base import ApiDomainResource
 
 
 class Messages(ApiDomainResource):
@@ -37,6 +35,9 @@ class Messages(ApiDomainResource):
             "template": template,
             "h:X-Mailgun-Variables": json.dumps(variables)
         }
+        print(self.base_url)
+
+        print(self.api_endpoint)
 
         if self.require_tls:
             payload['o:require-tls'] = 'True'

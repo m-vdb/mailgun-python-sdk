@@ -36,7 +36,7 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         :param **params:            every additional keyword argument is
                                     forwarded to `requests`
         """
-        url = self.base_url
+        url = self._get_base_url()
         if endpoint:
             url = "{}/{}".format(url, endpoint)
 

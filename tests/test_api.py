@@ -3,9 +3,9 @@ import unittest
 
 import requests
 
-from mailgun.api import MailgunApi
-from mailgun.domain import Domain
-from mailgun.mailing_list import MailingList
+from mailgunsdk.api import MailgunApi
+from mailgunsdk.domain import Domain
+from mailgunsdk.mailing_list import MailingList
 
 
 class MailgunApiTestCase(unittest.TestCase):
