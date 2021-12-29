@@ -14,8 +14,9 @@ class MailgunApi(object):  # pylint: disable=too-few-public-methods
     """
 
     def __init__(self, api_key=None):
-        self.api_key = api_key
         self.session = requests.Session()
+        self.set_api_key(api_key)
+
         # APIs
         self.ips = IPs(self)
         self.mailing_list = MailingList(self)
