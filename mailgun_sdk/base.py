@@ -41,7 +41,14 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
             url = "{}/{}".format(url, endpoint)
 
         response = self.api.session.request(method, url, **params)
-        response.raise_for_status()
+
+        if response.status_code != 200:
+            print(resp)
+
+        try:
+            response.raise_for_status()
+        except HTTPError as e:
+            raise HTTPError(str(e.response), e.response)
 
         return response.json()
 
