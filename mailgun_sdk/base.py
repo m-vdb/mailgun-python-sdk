@@ -45,6 +45,7 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         try:
             response.raise_for_status()
         except HTTPError as e:
+            
             raise HTTPError("{}\n{}".format(e.strerror, e.response.text), e.response)
 
         return response.json()
