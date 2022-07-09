@@ -1,0 +1,38 @@
+name: Run Tests
+on:
+  push:
+    branches: [ '*' ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    # Run automatically at 8AM PST Monday-Friday
+    - cron: '0 15 * * 1-5'
+  workflow_dispatch:
+
+jobs:
+  tests:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      matrix:
+        python-version: [ '3.6', '3.7', '3.8', '3.9' ]
+    steps:
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+      - name: Checkout mailgun_sdk-sdk
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install Dependencies
+        run: |
+          pip install virtualenv --upgrade
+          make install
+          make test-install
+
+      - name: Run the tests
+        run: make test

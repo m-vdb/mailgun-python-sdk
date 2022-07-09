@@ -3,8 +3,8 @@ import unittest
 
 from mock import patch, call
 
-from mailgun.api import MailgunApi
-from mailgun.mailing_list import MailingList
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.mailing_list import MailingList
 
 
 class MailingListTestCase(unittest.TestCase):
@@ -125,8 +125,7 @@ class MailingListTestCase(unittest.TestCase):
                     "ml@domain.com/members.json",
                     data={
                         "members": json.dumps(
-                            ["member@gmail.com"]
-                            * self.mailing_list.MEMBERS_UPLOAD_LIMIT
+                            ["member@gmail.com"] * self.mailing_list.MEMBERS_UPLOAD_LIMIT
                         ),
                         "upsert": "yes",
                     },

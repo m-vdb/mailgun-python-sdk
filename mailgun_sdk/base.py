@@ -15,9 +15,10 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
     api_endpoint = None
     api_url = "https://api.mailgun.net/v3"
 
-    def __init__(self, api):
+    def __init__(self, api, base_url="https://api.mailgun.net/v3"):
         assert self.api_endpoint, "Missing `api_endpoint` attribute definition."
         self.api = api
+        self.api_url = base_url
         self.base_url = self._get_base_url()
 
     def _get_base_url(self):
@@ -35,12 +36,17 @@ class ApiResource(object):  # pylint: disable=too-few-public-methods
         :param **params:            every additional keyword argument is
                                     forwarded to `requests`
         """
-        url = self.base_url
+        url = self._get_base_url()
         if endpoint:
             url = "{}/{}".format(url, endpoint)
 
         response = self.api.session.request(method, url, **params)
-        response.raise_for_status()
+
+        try:
+            response.raise_for_status()
+        except HTTPError as e:
+            
+            raise HTTPError("{}\n{}".format(e.strerror, e.response.text), e.response)
 
         return response.json()
 
@@ -52,9 +58,9 @@ class ApiDomainResource(ApiResource):  # pylint: disable=too-few-public-methods
 
     DOMAIN_NAMESPACE = False
 
-    def __init__(self, api, domain):
+    def __init__(self, api, domain, base_url=ApiResource.api_url):
         self.domain = domain
-        super(ApiDomainResource, self).__init__(api)
+        super(ApiDomainResource, self).__init__(api, base_url)
 
     def _get_base_url(self):
         """

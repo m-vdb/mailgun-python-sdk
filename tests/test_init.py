@@ -1,13 +1,13 @@
 import unittest
 
-import mailgun
-from mailgun.api import MailgunApi
+import mailgun_sdk
+from mailgun_sdk.api import MailgunApi
 
 
 class MailgunInitTestCase(unittest.TestCase):
     def test_api(self):
-        self.assertIsInstance(mailgun.api, MailgunApi)
+        self.assertIsInstance(mailgun_sdk.api, MailgunApi)
 
     def test_initialize(self):
-        mailgun.initialize("api-key-xxx")
-        self.assertEqual(mailgun.api.api_key, "api-key-xxx")
+        mailgun_sdk.initialize("api-key-xxx")
+        self.assertEqual(mailgun_sdk.api.api_key, "api-key-xxx")

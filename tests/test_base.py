@@ -5,8 +5,8 @@ from mock import patch
 from requests import Response
 from requests.exceptions import HTTPError
 
-from mailgun.api import MailgunApi
-from mailgun.base import ApiResource, ApiDomainResource, silence_error
+from mailgun_sdk.api import MailgunApi
+from mailgun_sdk.base import ApiResource, ApiDomainResource, silence_error
 
 
 class FakeResource(ApiResource):

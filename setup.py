@@ -7,7 +7,7 @@ VERSION = '0.3'
 
 
 setup(
-    name='mailgun-python-sdk',
+    name='mailgun_sdk',
     version=VERSION,
     description='Mailgun Python SDK (unofficial)',
     author='Maxime Vdb',
@@ -15,7 +15,7 @@ setup(
     packages=find_packages(),
     install_requires=['requests', 'six'],
     license="MIT",
-    keywords="mailgun api sdk",
+    keywords="mailgun_sdk api sdk",
     url='https://github.com/m-vdb/mailgun-python-sdk',
     download_url='https://github.com/m-vdb/mailgun-python-sdk/archive/v{}.tar.gz'.format(VERSION),
     project_urls={
